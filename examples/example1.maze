@@ -1,0 +1,12 @@
+[version:1.0]
+[output-mode:png]
+[size:10,10]
+[unit:25]
+[entrance:c(9,1)]
+[exit:c(0,8)]
+[current-position:c(1,5)]
+p1:euurrrruuulluuur(5)u;
+p2:p(1,9)rrrdd;
+p3:p(1,2)uuu;
+v:p(1,0,16,rgb(0:0:255));
+vc:rgb(0:255:0), c(4,5) > c(4,6) > c(4,7) > c(4,8) > c(5,8) > c(6,8);

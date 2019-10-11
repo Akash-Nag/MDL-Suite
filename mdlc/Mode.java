@@ -1,0 +1,8 @@
+package mdlc;
+
+enum Mode
+{
+	JAVA_INT, JAVA_CHAR, JAVA_BOOLEAN,
+	PYTHON_INT, PYTHON_CHAR, PYTHON_BOOLEAN,
+	PNG, JPG, TIF, BMP;
+}
