@@ -64,6 +64,6 @@ The MDL suite is open source and can be easily extended to develop a GUI applica
 
 # Acknowledgements
 
-We acknowledge Susmita Guha for her support during this project.
+We acknowledge Susmita Guha for her contributions to this project.
 
 # References
