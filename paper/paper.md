@@ -20,13 +20,15 @@ bibliography: paper.bib
 
 # Background
 
-Mazes have fascinated people since ancient times, and extensive research has been undertaken to develop cutting-edge maze-solving algorithms that are faster or use lesser resources. The popular micromouse competitions since the late 1970s `[@MicromouseHistory:2010]` have provided much of the push behind such research. 
+Mazes have fascinated people since ancient times, and extensive research has been undertaken to develop cutting-edge maze-solving algorithms that are faster or use lesser resources. The popular micromouse competitions since the late 1970s [@MicromouseHistory:2010] have provided much of the push behind such research. With each year, the competition is fiercer as new cutting-edge maze solving algorithms are invented.
 
-A typical problem in describing a new maze-solving algorithm in a journal article is to actually generate the maze image. Although random maze generators are widely available, often a paper needs to describe a new algorithm that optimizes certain types of paths and loops in a maze. In such cases, we need to have precise control over how the maze looks. Moreover, the paths taken by a robot (or solver) also needs to be marked out (e.g. see `[@Gupta:2014]`). To generate such images, the researcher needs to either painstakingly draw it or write a program to do so, both of which are time-consuming and tedious. Even if such an image could be generated for journal articles, they can not be shared among researchers so that they may try their own solvers on them, because these images cannot be readily converted into program-readable mazes.
+# Statement of Need
+
+A typical problem in describing a new maze-solving algorithm in a journal article is to actually generate the maze image. Although random maze generators are widely available, often a paper needs to describe a new algorithm that optimizes certain types of paths and loops in a maze. In such cases, we need to have precise control over how the maze looks. Moreover, the paths taken by a robot (or solver) also needs to be marked out (e.g. see [@Gupta:2014]). To generate such images, the researcher needs to either painstakingly draw it or write a program to do so, both of which are time-consuming and tedious. Even if such an image could be generated for journal articles, they can not be shared among researchers so that they may try their own solvers on them, because these images cannot be readily converted into program-readable mazes. To solve the aforesaid problems, we have developed a markup language called Maze Description Language (MDL), which is human-readable yet terse.
 
 # Summary
 
-To solve the aforesaid problems, we have developed a markup language called Maze Description Language (MDL), which is human-readable yet terse. Mazes can be easily described with minimal code, and visited paths can be marked out. Multiple visited paths can also be marked using separate colors. The mazes are fully customizable and a path-based description allows manual maze design very easy. The MDL suite contains two programs: a MDL compiler and a MDL generator. 
+ With MDL-Suite, mazes can be easily described with minimal code, and visited paths can be marked out. Multiple visited paths can also be marked using separate colors. The mazes are fully customizable and a path-based description allows manual maze design very easy. The MDL suite contains two programs: a MDL compiler and a MDL generator. 
 
 The **MDL generator** is a random maze generator that, given the maze specifications, generates a random maze in MDL format.
 
