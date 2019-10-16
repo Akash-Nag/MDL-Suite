@@ -1,10 +1,14 @@
 # Maze Description Language Suite: Generator and Compiler
 
-**Maze Description Language (MDL)** is a markup language that can be used to describe mazes easily in a human readable text format. Since it is text, file sizes are very small, and therefore, these can be shared easily for collaborative and research efforts. With a small command-set and a path-based description approach, designing mazes manually is very simple requiring minimal typing. Both the generator and compiler are written in Java, and as such, using it requires a JVM (Oracle Java 10, version 10.0.2) to be installed.
+**Maze Description Language (MDL)** is a markup language that can be used to describe mazes easily in a human readable text format. Since it is text, file sizes are very small, and therefore, these can be shared easily for collaborative and research efforts. With a small command-set and a path-based description approach, designing mazes manually is very simple requiring minimal typing. 
 
 This suite contains two tools:
 1. The MDL Compiler
 1. The MDL Generator
+
+## Build/Execution Instructions and Dependencies
+
+Both the generator and compiler are written in Java. The pre-built JARs are available in the `build` directory and executing them requires a JVM (Oracle Java 10, version 10.0.2) to be installed. There are no other dependencies for this software. For building from source, any JVM (version 8 onwards) can be used and the Java source files are available in the `mdlc` and `mdlg` directories.
 
 ## Using the MDL generator to generate mazes
 
@@ -206,6 +210,10 @@ $ java -jar mdlc.jar maze2.maze
 If the command executes successfully, we will be able to see that a file named ``maze2.png`` has been generated as follows (the exact output will vary as the maze is generated dynamically and randomly):
 
 ![Output from Example-2](./examples/example2.png)
+
+## Acknowledgements
+
+I thank Susmita Guha for her contributions to this project.
 
 ## License
 
