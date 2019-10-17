@@ -6,7 +6,7 @@ This suite contains two tools:
 1. The MDL Compiler
 1. The MDL Generator
 
-## Build/Execution Instructions and Dependencies
+## Dependencies and Build Instructions
 
 Both the generator and compiler are written in Java. The pre-built JARs are available in the `build` directory and executing them requires a JVM (Oracle Java 10, version 10.0.2) to be installed. There are no other dependencies for this software. For building from source, any JVM (version 8 onwards) can be used and the Java source files are available in the `mdlc` and `mdlg` directories.
 
@@ -25,6 +25,27 @@ java mdlg.MDLG <parameters>
 ```
 
 where the `<parameters>` refer to the list of input files needed to be passed as arguments.
+
+To build a JAR, from the parent directory, execute:
+
+```shell
+jar -cvf mdlc.jar mdlc/*.class
+jar -cvf mdlg.jar mdlg/*.class
+```
+
+The above commands will create 2 JAR files named `mdlc.jar` and `mdlg.jar` in the parent directory but their manifests will be missing the `Main-Class` attribute. To edit that, open these jars using any Archive Manager program, and edit the `MANIFEST.MF` file inside the `META-INF` directory. Add the following line at the end of the manifest file, and save & update the JAR.
+
+Add the following to the manifest of `mdlc.jar`:
+```
+Main-Class: mdlc.MDLC
+```
+
+Add the following to the manifest of `mdlg.jar`:
+```
+Main-Class: mdlg.MDLG
+```
+
+Both these JARs can now be executed as explained later in this readme.
 
 ## Using the MDL generator to generate mazes
 

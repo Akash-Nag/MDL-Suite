@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"mdlg","l":"MDLG"},{"p":"mdlg","l":"RandomMazeGenerator"}]

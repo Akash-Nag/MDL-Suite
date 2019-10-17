@@ -1,10 +1,37 @@
+/**
+ * Maze Description Language Generator
+ * Distributed under Artistic License 2.0
+ * 
+ * Generates random mazes in MDL format using the recursive division method
+ * 
+ * @author	Akash Nag
+ * @version	1.0
+ */
+
 package mdlg;
 
+/**
+ * This class handles the maze creation process
+ */
 class RandomMazeGenerator
 {
+	/**
+	 * Stores the generated maze as a boolean matrix with true representing vacant cells and false otherwise
+	 */
 	private static boolean maze[][];
+	
+	/**
+	 * A random object used to generate random positions for placing the walls inside a chamber
+	 */
 	private static java.util.Random random;
 
+	/**
+	 * The primary function that starts the maze generation process and calls other maze generation functions
+	 * 
+	 * @param width			The width of the maze in number of cells
+	 * @param height		The height of the maze in number of cells
+	 * @return 				The generated maze as a boolean matrix
+	 */
 	protected static boolean[][] generateMaze(int width, int height)
 	{
 		// create new blank maze with borders all around
@@ -24,6 +51,15 @@ class RandomMazeGenerator
 		return maze;
 	}
 
+	/**
+	 * The recursive procedure to generate the maze through recursive-division
+	 * 
+	 * @param rowStart	The starting index of the row
+	 * @param colStart	The starting index of the column
+	 * @param rowEnd	The ending index of the row
+	 * @param colEnd	The ending index of the column
+	 * @return 			Nothing
+	 */
 	private static void mazifyChamber(int rowStart, int colStart, int rowEnd, int colEnd)
 	{
 		int dCol = colEnd - colStart;
@@ -44,14 +80,6 @@ class RandomMazeGenerator
 		// draw 3 holes in randomly selected 3 out of 4 wall sections
 		drawHoles(rowStart, colStart, rowEnd, colEnd, verticalWall, horizontalWall);
 
-		// 1,1 : 8,8
-		// v=3, h=5
-		//	RS,CS,RE,HE
-		// C1: rs,cs,h-1,v-1 (top left)
-		// C2: rs,v+1,h-1,ce (top right)
-		// C3: h+1,cs,re,v-1 (bottom left)
-		// C4: h+1,v+1,re,ce
-
 		// call itself recursively
 		mazifyChamber(rowStart, colStart, horizontalWall-1, verticalWall-1);
 		mazifyChamber(rowStart, verticalWall+1, horizontalWall-1, colEnd);
@@ -59,6 +87,17 @@ class RandomMazeGenerator
 		mazifyChamber(horizontalWall+1, verticalWall+1, rowEnd, colEnd);		
 	}
 
+	/**
+	 * Divides a chamber into four sub-chambers by drawing a vertical and a horizontal wall
+	 * 
+	 * @param rs	The row-index of the top-left coordinate of the chamber
+	 * @param cs	The column-index of the top-left coordinate of the chamber
+	 * @param re	The row-index of the bottom-right coordinate of the chamber
+	 * @param ce	The column-index of the bottom-right coordinate of the chamber
+	 * @param vWall	The distance of the vertical wall from the left of the chamber
+	 * @param hWall	The distance of the horizontal wall from the top of the chamber
+	 * @return 		Nothing
+	 */
 	private static void drawWalls(int rs, int cs, int re, int ce, int vWall, int hWall)
 	{
 		for(int i=rs; i<=re; i++) 
@@ -80,6 +119,17 @@ class RandomMazeGenerator
 		}
 	}
 
+	/**
+	 * Draw holes/exits at three out of four wall-sections dividing a chamber
+	 * 
+	 * @param rs	The row-index of the top-left coordinate of the chamber
+	 * @param cs	The column-index of the top-left coordinate of the chamber
+	 * @param re	The row-index of the bottom-right coordinate of the chamber
+	 * @param ce	The column-index of the bottom-right coordinate of the chamber
+	 * @param vWall	The distance of the vertical wall from the left of the chamber
+	 * @param hWall	The distance of the horizontal wall from the top of the chamber
+	 * @return 		Nothing
+	 */
 	private static void drawHoles(int rs, int cs, int re, int ce, int v, int h)
 	{
 		int sections[][] = {
@@ -112,6 +162,14 @@ class RandomMazeGenerator
 		}
 	}
 
+	/**
+	 * Creates the entrance and exit at the first possible position in the
+	 * first and last rows of the maze
+	 * 
+	 * @param h	The height of the maze in number of cells
+	 * @param w The width of the maze in number of cells
+	 * @return 	Nothing
+	 */
 	private static void createExits(int h, int w)
 	{
 		for(int i=1; i<w-1; i++)

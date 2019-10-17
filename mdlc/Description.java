@@ -1,3 +1,13 @@
+/**
+ * Maze Description Language Compiler
+ * Distributed under Artistic License 2.0
+ * 
+ * Compiles mazes given in MDL format to beautiful maze images or Java/Python code
+ * 
+ * @author	Akash Nag
+ * @version	1.0
+ */
+
 package mdlc;
 
 import java.io.BufferedReader;
@@ -7,59 +17,166 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+/**
+ * This class encapsulates the maze description, read from the MDL file
+ */
 class Description
 {
-	// defines the output mode
+	/**
+	 * Defines the output mode of the compiler: to generate code or image
+	 */
 	protected Mode outputMode;
 
-	// defines whether ancilliary graphics are shown
+	/**
+	 * Defines whether a thin grid will be visible to separate individual cells in the maze
+	 */
 	protected boolean showGrid;
+	
+	/**
+	 * Defines whether the coordinates of the cells will be shown as row and column headers
+	 */
 	protected boolean showIndices;
 
-	// defines the characters to be placed in case of character output
+	/**
+	 * Defines the character that will be used as a place-holder in Java/Python code
+	 * for representing vacant cells
+	 */
 	protected char pathChar;
+	
+	/**
+	 * Defines the character that will be used as a place-holder in Java/Python code
+	 * for representing blocked cells
+	 */
 	protected char wallChar;
+
+	/**
+	 * Defines the character that will be used as a place-holder in Java/Python code
+	 * for representing the current-cell (in case of a solver)
+	 */
 	protected char positionChar;
+
+	/**
+	 * Defines the character that will be used as a place-holder in Java/Python code
+	 * for representing all cells which have been visited (in case of a solver)
+	 */
 	protected char visitedChar;
 
-	// defines the integers to be placed in case of integer output
+	/**
+	 * Defines the integer that will be used as a place-holder in Java/Python code
+	 * for representing vacant cells
+	 */
 	protected int pathInt;
+
+	/**
+	 * Defines the integer that will be used as a place-holder in Java/Python code
+	 * for representing blocked cells
+	 */
 	protected int wallInt;
+
+	/**
+	 * Defines the integer that will be used as a place-holder in Java/Python code
+	 * for representing the current cell (in case of a solver)
+	 */
 	protected int positionInt;
+
+	/**
+	 * Defines the integer that will be used as a place-holder in Java/Python code
+	 * for representing all cells that have been visited (by a solver)
+	 */
 	protected int visitedInt;
 
-	// defines the colors in case of graphics output
+	/**
+	 * Defines the color of vacant cells
+	 */
 	protected Color pathColor;
+
+	/**
+	 * Defines the color of the blocked cells
+	 */
 	protected Color wallColor;
+
+	/**
+	 * Defines the color of the grid (if visible)
+	 */
 	protected Color gridColor;
+
+	/**
+	 * Defines the color of the filled-circle drawn to indicate the current position in absence of a sprite-image
+	 */
 	protected Color positionColor;
 
-	// defines external images to place at the current and visited squares
+	/**
+	 * Defines the sprite image that will be drawn to indicate the current position (of a solver)
+	 */
 	protected BufferedImage positionSprite;
+
+	/**
+	 * Defines the sprite image that will be drawn to indicate the positions that have been visited (by a solver)
+	 */
 	protected BufferedImage visitedSprite;
 
-	// defines the size of the maze in units of squares
+	/**
+	 * Defines the width of the maze (in number of cells)
+	 */
 	protected int width;
+
+	/**
+	 * Defines the height of the maze (in number of cells)
+	 */
 	protected int height;
 
-	// defines the unit coordinates of the entrance, exit and current positions
+	/**
+	 * Defines the coordinate of the entrance to the maze
+	 */
 	protected Coordinate entrance;
+
+	/**
+	 * Defines the coordinates of the exit of the maze
+	 */
 	protected Coordinate exit;
+
+	/**
+	 * Defines the coordinates of the current position (of a solver)
+	 */
 	protected Coordinate currentPosition;
 
-	// defines the square size in pixels
+	/**
+	 * Defines the size of each cell (in pixels)
+	 */
 	protected int squareSize;
 
-	// defines the actual maze
+	/**
+	 * Stores the actual maze
+	 */
 	protected SquareType maze[][];
+
+	/**
+	 * Stores the status of each cell as 
+	 * an ArrayList of directions representing the visited-path line shape
+	 */
 	protected Object visitStatus[][];
+
+	/**
+	 * Stores the status of each cell as an ArrayList of colors 
+	 * representing the visited path in case of multiple visited 
+	 * paths of different colors
+	 */
 	protected Object visitedPathColor[][];
 
-	// private information for internal use
+	/**
+	 * Stores the strings representing the specified paths indexed by a path ID
+	 */
 	private static HashMap<Integer, String> allLines;
+
+	/**
+	 * Stores the initial coordinates of each path indexed by a path ID
+	 */
 	private static HashMap<Integer, Coordinate> lineCoords;
 
-	public Description()			// set default options
+	/**
+	 * Default constructor to initialize all maze settings to their default values
+	 */
+	public Description()
 	{
 		this.pathColor = Color.WHITE;
 		this.wallColor = Color.BLACK;
@@ -94,6 +211,13 @@ class Description
 		this.outputMode = Mode.PNG;
 	}
 
+	/**
+	 * Reads a maze-description from a MDL file
+	 * 
+	 * @param filename		The MDL-file to read from
+	 * @return 				A description-object describing the maze
+	 * @exception Exception	On input error or on encountering invalid settings
+	 */
 	protected static Description readFile(String filename) throws Exception
 	{
 		allLines = new HashMap<Integer, String>();
@@ -192,6 +316,14 @@ class Description
 		return desc;
 	}
 
+	/**
+	 * An utility function used to extract a portion of a string with the given prefix and suffix
+	 * 
+	 * @param s			The string to process
+	 * @param prefix	The prefix to match
+	 * @param suffix	The suffix to match
+	 * @return 			The extracted substring with the given prefix and suffix
+	 */
 	private static String extract(String s, String prefix, String suffix)
 	{
 		int pos = s.indexOf(prefix);
@@ -201,6 +333,13 @@ class Description
 		return res.substring(0, res.length()-suffix.length());
 	}
 
+	/**
+	 * Processes configuration settings for the maze
+	 * 
+	 * @param desc	A description-object to store the settings into
+	 * @param line	The setting read from file
+	 * @return 		A boolean value indicating whether or not the setting was a valid setting with proper syntax
+	 */
 	private static boolean processSettings(Description desc, String line)
 	{
 		// Syntax:		[setting:value]
@@ -322,6 +461,12 @@ class Description
 		return true;
 	}
 
+	/**
+	 * Reads an image from a file
+	 * 
+	 * @param path	Path to the image file to be read
+	 * @return 		A BufferedImage object reference to the image
+	 */
 	private static BufferedImage loadImage(String path)
 	{
 		if(!path.startsWith("\"") || !path.endsWith("\"")) return null;
@@ -334,6 +479,13 @@ class Description
 		}
 	}
 
+	/**
+	 * Processes multiple colors in RGB-string-format and translates them to Color objects
+	 * 
+	 * @param colors	An array of strings containing color-strings in the format rgb(red:green:blue)
+	 * @return 			A Color array of objects representing the colors
+	 * @see Color
+	 */
 	private static Color[] processColors(String colors[])
 	{
 		Color c[] = new Color[colors.length];
@@ -347,6 +499,13 @@ class Description
 		return c;
 	}
 
+	/**
+	 * An utility function separating a delimiter-separated string to separate integer arguments
+	 * 
+	 * @param s			The given string
+	 * @param sep		The delimeter
+	 * @return 			An integer array containing each individual element in the given string
+	 */
 	private static int[] paramsAsInt(String s, String sep)
 	{
 		String x[] = s.split(sep);
@@ -355,12 +514,26 @@ class Description
 		return p;
 	}
 
+	/**
+	 * An utility function translating a string to a coordinate object
+	 * 
+	 * @param s			The given string in the format c(row,col)
+	 * @return 			A Coordinate object representing the coordinate
+	 * @see Coordinate
+	 */
 	private static Coordinate paramAsCoordinate(String s)
 	{
 		int x[] = paramsAsInt(extract(s,"c(",")"), ",");
 		return(new Coordinate(x[0], x[1]));
 	}
 
+	/**
+	 * Translates a visited-path description as a path-string to actual coordinates and stores them into a description object
+	 * 
+	 * @param desc	A description object to store the path information into
+	 * @param line	A path description
+	 * @return 		A boolean indicating whether the path was successfully processed
+	 */
 	private static boolean processVisitedPath(Description desc, String line) throws Exception
 	{
 		// Syntax: v:p(line,colStart,colEnd,color);
@@ -403,7 +576,15 @@ class Description
 
 		return true;
 	}
-
+	
+	/** 
+	 * Translates a visited-path description as a coordinate-string to actual coordinates and stores them into a description object
+	 * 
+	 * @param desc			A description object to store the path information into
+	 * @param line			A path description
+	 * @exception Exception On processing error
+	 * @return 				A boolean indicating whether the path was successfully processed 
+	 */
 	private static boolean processVisitedPathInCoordinates(Description desc, String line) throws Exception
 	{
 		// Syntax: vc:color,c(row,col) > c(row,col) > .... > c(row,col);
@@ -440,13 +621,19 @@ class Description
 			ArrayList<Color> list2 = (obj2 == null ? new ArrayList<Color>() : (ArrayList<Color>)obj2);
 			list2.add(visitedColor);
 			desc.visitedPathColor[r][c] = list2;
-
-			//System.out.println(coords[i] + " in " + list1.get(list1.size()-1) + " : " + list2.get(list2.size()-1));
 		}
 
 		return true;
 	}
 
+	/** 
+	 * Translates a visited-path description as a movement-string to actual coordinates and stores them into a description object
+	 * 
+	 * @param desc			A description object to store the path information into
+	 * @param line			A path description
+	 * @exception Exception On processing error
+	 * @return 				A boolean indicating whether the path was successfully processed 
+	 */
 	private static boolean processPath(Description desc, String line) throws Exception
 	{
 		int pos = line.indexOf(":");
@@ -516,6 +703,14 @@ class Description
 		return true;
 	}
 
+	/** 
+	 * Translates a maze description in row-format to actual coordinates and stores them into a description object
+	 * 
+	 * @param desc			A description object to store the maze information into
+	 * @param line			A string describing one row of the maze
+	 * @exception Exception On processing error
+	 * @return 				A boolean indicating whether the row was successfully processed 
+	 */
 	private static boolean processRow(Description desc, String line) throws Exception
 	{
 		int pos = line.indexOf(":");
@@ -538,6 +733,13 @@ class Description
 		return true;
 	}
 
+	/**
+	 * Determines the coordinate on a position in a given path
+	 * 
+	 * @param lineIndex		The path ID
+	 * @param colIndex		The position-index on that path
+	 * @return Coordinate	The coordinate of that position on that path
+	 */
 	private static Coordinate determineCoordinateFromLine(int lineIndex, int colIndex)
 	{
 		Coordinate start = new Coordinate(lineCoords.get(lineIndex));
@@ -546,6 +748,12 @@ class Description
 		return start;
 	}
 
+	/**
+	 * Expands a condensed movement string
+	 * 
+	 * @param line	A string containing a movement string in condensed form
+	 * @return		The expanded movement string
+	 */
 	private static String enumerateMoves(String line)
 	{
 		// this function expands a coded path into its full form
@@ -584,6 +792,12 @@ class Description
 		return s;
 	}
 
+	/**
+	 * Checks if a movement string is valid, i.e. there is no re-traversal over the same path in the opposite direction
+	 * 
+	 * @param s	The movement string
+	 * @return	null if the movement string is invalid, or the movement string itself unchanged if it is valid
+	 */
 	private static String validateMoveString(String s)
 	{
 		// check if direction is reversed: left-right, or up-down pairs
@@ -600,6 +814,13 @@ class Description
 		return s;
 	}
 
+	/**
+	 * Determines the direction of a visited-path at a particular point on the path
+	 * 
+	 * @param index		A position-index on a visited path
+	 * @param coords	A list of coordinates representing the visited path
+	 * @return 			The direction to face at the given position on the path
+	 */
 	private static VisitDirection getVisitDirection(int index, Coordinate coords[])
 	{
 		Coordinate prev = null, next = null, current = coords[index];
@@ -651,6 +872,13 @@ class Description
 		}
 	}
 
+	/**
+	 * Determines the direction of a position with respect to another position
+	 * 
+	 * @param from	The first position
+	 * @param to	The second position
+	 * @return		The direction of the second position with respect to the first position
+	 */
 	private static Direction getDirectionRelativeTo(Coordinate from, Coordinate to)
 	{
 		// returns the direction of 'to' relative to 'from'

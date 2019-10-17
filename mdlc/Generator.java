@@ -1,3 +1,13 @@
+/**
+ * Maze Description Language Compiler
+ * Distributed under Artistic License 2.0
+ * 
+ * Compiles mazes given in MDL format to beautiful maze images or Java/Python code
+ * 
+ * @author	Akash Nag
+ * @version	1.0
+ */
+
 package mdlc;
 
 import java.io.BufferedWriter;
@@ -8,8 +18,20 @@ import java.awt.Graphics;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for compiling the maze and generating the output
+ */
 class Generator
 {
+	/**
+	 * This is the main function that will call the appropriate functions to compile
+	 * the maze and write the output to a file
+	 * 
+	 * @param desc			A description object describing the maze
+	 * @param outputFile	The path to the output file
+	 * @exception Exception	On output/processing error
+	 * @return 				Nothing
+	 */
 	public static void generateMaze(Description desc, String outputFile) throws Exception
 	{
 		switch(desc.outputMode)
@@ -32,6 +54,14 @@ class Generator
 		}
 	}
 
+	/**
+	 * This function handles all output modes related to generating text: Java/Python code
+	 * 
+	 * @param desc			A description object describing the maze
+	 * @param outputFile	The path to the output file
+	 * @exception Exception	On output/processing error
+	 * @return 				Nothing
+	 */
 	private static void processText(Description desc, String outputFile) throws Exception
 	{
 		StringBuffer s = new StringBuffer();
@@ -117,6 +147,14 @@ class Generator
 		bw.close();
 	}
 
+	/**
+	 * This function handles all output modes related to generating images in JPG/TIFF/PNG/BMP format
+	 * 
+	 * @param desc			A description object describing the maze
+	 * @param outputFile	The path to the output image file
+	 * @exception Exception	On output/processing error
+	 * @return 				Nothing
+	 */
 	private static void processGraphics(Description desc, String outputFile) throws Exception
 	{
 		int s = desc.squareSize;
@@ -233,6 +271,18 @@ class Generator
 		ImageIO.write(image, format, new java.io.File(outputFile + "." + format));
 	}
 
+	/**
+	 * This function draws a portion of the visited path for a given cell in the maze
+	 * 
+	 * @param graphics	A graphics-object reference that will be used to draw the visited path
+	 * @param desc		A description object describing the maze
+	 * @param r			The row-index of the cell in which to draw
+	 * @param c			The column-index of the cell in which to draw
+	 * @param x			The pixel x-coordinate of the top-left of the cell
+	 * @param y			The pixel y-coordinate of the top-left of the cell
+	 * @param s			The size of the square-cell in pixels
+	 * @return 			Nothing
+	 */
 	private static void drawVisitedPath(Graphics graphics, Description desc, int r, int c, int x, int y, int s)
 	{
 		if(desc.visitStatus[r][c]==null) return;
@@ -271,6 +321,18 @@ class Generator
 		}
 	}
 
+	/**
+	 * Draws half of the line in a given cell representing a visited-path.
+	 * Each cell contains two parts of a line which can be combined to get 6 different shapes.
+	 * This function draws one such part.
+	 * 
+	 * @param graphics	A graphics-object reference that will be used to draw the visited path
+	 * @param x			The pixel x-coordinate of the top-left of the cell
+	 * @param y			The pixel y-coordinate of the top-left of the cell
+	 * @param s			The size of the square-cell in pixels
+	 * @param dir		The shape of the line
+	 * @return 			Nothing	 
+	 */
 	private static void drawVisitedPathPortion(Graphics graphics, int x, int y, int s, VisitDirection dir)
 	{
 		int x1 = 0, y1 = 0, w = 0, h = 0;
