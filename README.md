@@ -105,10 +105,10 @@ A MDL setting takes the following form:
 | ``placeholder-int`` | ``1,0,2,3`` | 2 or 4 comma-separated integers for path, wall, visited and current-position markers to be used in text mode |
 | ``visited-sprite`` | ``"path/to/sprite-image.png"`` | Specifies an image (sprite) to be used in all cells which have been visited |
 | ``position-sprite`` | ``"path/to/sprite-image.png"`` | Specifies an image (sprite) to be used in the current cell |
-| ``path-color`` | ``rgb(255,255,255)`` | color of the path cells |
-| ``wall-color`` | ``rgb(0,0,0)`` | color of the blocked (wall) cells |
-| ``position-color`` | ``rgb(255,0,0)`` | color of the circle-marker at the current position |
-| ``grid-color`` | ``rgb(255,255,255)`` | the grid color separating the cells |
+| ``path-color`` | ``rgb(255:255:255)`` | color of the path cells |
+| ``wall-color`` | ``rgb(0:0:0)`` | color of the blocked (wall) cells |
+| ``position-color`` | ``rgb(255:0:0)`` | color of the circle-marker at the current position |
+| ``grid-color`` | ``rgb(255:255:255)`` | the grid color separating the cells |
 | ``current-position`` | ``c(9,1)`` | Specifying the current position `c(row,col)` |
 | ``show-grid`` | ``true`` | A boolean value indicating whether the grid should be drawn |
 | ``show-indices`` | ``true`` | A boolean value indicating whether the indices should be visible |
