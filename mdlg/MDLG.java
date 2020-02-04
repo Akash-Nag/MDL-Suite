@@ -61,6 +61,7 @@ public class MDLG
 				{
 					String output = args[i];
 					boolean maze[][] = RandomMazeGenerator.generateMaze(width, height);
+					if(maze == null) throw(new Exception("Invalid dimensions!"));
 					writeMazeToFile(maze, config, output);
 					System.out.println(i + "/" + (args.length-1) + ": maze generated successfully");
 				}

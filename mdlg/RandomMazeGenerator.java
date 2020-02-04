@@ -13,7 +13,7 @@ package mdlg;
 /**
  * This class handles the maze creation process
  */
-class RandomMazeGenerator
+public class RandomMazeGenerator
 {
 	/**
 	 * Stores the generated maze as a boolean matrix with true representing vacant cells and false otherwise
@@ -32,8 +32,11 @@ class RandomMazeGenerator
 	 * @param height		The height of the maze in number of cells
 	 * @return 				The generated maze as a boolean matrix
 	 */
-	protected static boolean[][] generateMaze(int width, int height)
+	public static boolean[][] generateMaze(int width, int height)
 	{
+		// check if dimensions are valid
+		if(width < 3 || height < 3) return null;
+		
 		// create new blank maze with borders all around
 		random = new java.util.Random();
 		maze = new boolean[height][width];
