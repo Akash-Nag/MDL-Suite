@@ -16,7 +16,7 @@ Thanks for taking the time to contribute! Please read the guidelines below befor
 
 * Before submitting, please ensure all coding conventions have been followed, and that the code is well documented.
 
-#### **Do you intend to add a new feature?**
+#### **Adding a new feature**
 
 * Open a new GitHub pull request to merge your fork.
 
@@ -24,9 +24,15 @@ Thanks for taking the time to contribute! Please read the guidelines below befor
 
 * Before submitting, please ensure all coding conventions have been followed, and that the code is well documented.
 
-#### **Do you want to contribute to the documentation?**
+#### **Contributing to the documentation**
 
 * Your contributions are most welcome! Please feel free to contact the author of this repository directly over e-mail to suggest any contributions to the MDL Suite documentation.
+
+#### **Do you have any queries regarding the tool or source code?**
+
+* Please do not open any issue for getting your queries resolved.
+
+* Please get in touch with the author of this repository directly (over e-mail) with your query.
 
 
 Thanks!
