@@ -12,9 +12,9 @@ authors:
     orcid: 0000-0003-0363-2698
     affiliation: 1
 affiliations:
- - name: Lecturer, Dept. of Computer Science, M.U.C. Women's College
+ - name: Dept. of Computer Science, M.U.C. Women's College
    index: 1
-date: 11 October 2019
+date: 10 February 2020
 bibliography: paper.bib
 ---
 
